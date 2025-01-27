@@ -1,0 +1,13 @@
+[gd_scene load_steps=2 format=3 uid="uid://bi8a3x8tw2avb"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_mkoic"]
+radius = 19.0105
+
+[node name="ExplosionArea" type="Area2D" groups=["explosion"]]
+scale = Vector2(1.21052, 1.2368)
+collision_layer = 16
+collision_mask = 2
+
+[node name="ExplosionCollisionShape" type="CollisionShape2D" parent="."]
+scale = Vector2(21.4837, 20.324)
+shape = SubResource("CircleShape2D_mkoic")

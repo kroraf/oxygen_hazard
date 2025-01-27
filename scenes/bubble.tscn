@@ -1,0 +1,22 @@
+[gd_scene load_steps=4 format=3 uid="uid://bn6b3i45y66bt"]
+
+[ext_resource type="Script" uid="uid://b7frjlfjludlg" path="res://scripts/bubble.gd" id="1_pm753"]
+[ext_resource type="Texture2D" uid="uid://2d0p3d8h03ot" path="res://assets/sprites/Sprite-0001.png" id="2_b4vvx"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_n2mqj"]
+radius = 29.1548
+
+[node name="Bubble" type="Area2D" groups=["bubble"]]
+collision_layer = 2
+collision_mask = 19
+script = ExtResource("1_pm753")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("CircleShape2D_n2mqj")
+
+[node name="BubbleSprite" type="Sprite2D" parent="."]
+texture = ExtResource("2_b4vvx")
+
+[connection signal="area_entered" from="." to="." method="_on_area_entered"]
+[connection signal="area_exited" from="." to="." method="_on_area_exited"]
+[connection signal="body_entered" from="." to="." method="_on_body_entered"]

@@ -1,0 +1,24 @@
+[gd_scene load_steps=5 format=3 uid="uid://xegokgkvt2b"]
+
+[ext_resource type="Script" uid="uid://c7jexj8yob0eb" path="res://scripts/player.gd" id="1_onrkg"]
+[ext_resource type="PackedScene" uid="uid://bpty42a6oevm1" path="res://scenes/particle_effect.tscn" id="2_i3pqv"]
+[ext_resource type="Texture2D" uid="uid://bqpu157dknrw" path="res://assets/sprites/fish.png" id="3_gphnd"]
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_onrkg"]
+radius = 14.8952
+height = 61.7955
+
+[node name="Player" type="CharacterBody2D"]
+collision_mask = 2
+script = ExtResource("1_onrkg")
+
+[node name="FlameParticleEffect" parent="." instance=ExtResource("2_i3pqv")]
+amount = 30
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture = ExtResource("3_gphnd")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+rotation = 1.5708
+scale = Vector2(1.34271, 1.13277)
+shape = SubResource("CapsuleShape2D_onrkg")

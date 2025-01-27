@@ -1,0 +1,24 @@
+[gd_scene load_steps=4 format=3 uid="uid://bpty42a6oevm1"]
+
+[sub_resource type="Curve" id="Curve_6hifj"]
+_data = [Vector2(0.00326797, 0.455497), 0.0, 0.0, 0, 0, Vector2(1, 1), 0.0, 0.0, 0, 0]
+point_count = 2
+
+[sub_resource type="CurveTexture" id="CurveTexture_3mjc8"]
+curve = SubResource("Curve_6hifj")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_8r1b1"]
+particle_flag_disable_z = true
+emission_shape = 3
+emission_box_extents = Vector3(1, 35, 1)
+spread = 9.431
+initial_velocity_min = -200.0
+initial_velocity_max = -200.0
+gravity = Vector3(0, 0, 0)
+scale_max = 4.0
+scale_curve = SubResource("CurveTexture_3mjc8")
+
+[node name="FlameParticleEffect" type="GPUParticles2D"]
+amount = 200
+lifetime = 0.5
+process_material = SubResource("ParticleProcessMaterial_8r1b1")
