@@ -17,7 +17,15 @@ config/icon="res://icon.svg"
 
 [display]
 
+window/size/viewport_width=320
+window/size/viewport_height=180
+window/size/window_width_override=1280
+window/size/window_height_override=720
 window/stretch/mode="canvas_items"
+
+[editor_plugins]
+
+enabled=PackedStringArray("res://addons/script-ide/plugin.cfg")
 
 [global_group]
 
@@ -67,6 +75,7 @@ ui_down={
 2d_physics/layer_3="water"
 2d_physics/layer_4="powerup"
 2d_physics/layer_5="explosion"
+2d_physics/layer_6="wall"
 
 [rendering]
 

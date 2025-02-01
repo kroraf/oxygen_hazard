@@ -1,24 +1,43 @@
-[gd_scene load_steps=2 format=3 uid="uid://ci1bw0excb6yq"]
+[gd_scene load_steps=3 format=3 uid="uid://ci1bw0excb6yq"]
 
 [ext_resource type="Script" uid="uid://dwrxf0nkts864" path="res://scripts/hud.gd" id="1_37p78"]
+[ext_resource type="FontFile" uid="uid://b0tbustybirmw" path="res://assets/fonts/m6x11.ttf" id="2_oo0fn"]
 
-[node name="HUD" type="CanvasLayer"]
+[node name="HUD" type="Control"]
+custom_minimum_size = Vector2(0, 25)
+layout_mode = 3
+anchors_preset = 10
+anchor_right = 1.0
+grow_horizontal = 2
+size_flags_vertical = 0
 script = ExtResource("1_37p78")
 
-[node name="Score" type="Label" parent="."]
-offset_right = 576.0
-offset_bottom = 104.0
-size_flags_horizontal = 0
-theme_override_font_sizes/font_size = 50
+[node name="MarginContainer" type="MarginContainer" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_top = 5
+
+[node name="HBoxContainer" type="HBoxContainer" parent="MarginContainer"]
+layout_mode = 2
+size_flags_vertical = 0
+
+[node name="Score" type="Label" parent="MarginContainer/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_colors/font_color = Color(0.839216, 0.839216, 0.839216, 1)
+theme_override_colors/font_outline_color = Color(0.10748, 0.10748, 0.10748, 1)
+theme_override_fonts/font = ExtResource("2_oo0fn")
 text = "Bubbles popped:"
 horizontal_alignment = 1
-vertical_alignment = 1
 
-[node name="Health" type="Label" parent="."]
-offset_left = 623.0
-offset_top = 17.0
-offset_right = 1071.0
-offset_bottom = 100.0
-size_flags_horizontal = 8
-theme_override_font_sizes/font_size = 51
+[node name="Health" type="Label" parent="MarginContainer/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_colors/font_color = Color(0.838897, 0.838897, 0.838897, 1)
+theme_override_colors/font_outline_color = Color(0.136826, 0.136826, 0.136826, 1)
+theme_override_fonts/font = ExtResource("2_oo0fn")
 text = "Health:"

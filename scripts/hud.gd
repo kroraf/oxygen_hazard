@@ -1,7 +1,7 @@
-extends CanvasLayer
+extends Control
 
-@onready var score: Label = $Score
-@onready var health: Label = $Health
+@onready var score = $MarginContainer/HBoxContainer/Score
+@onready var health = $MarginContainer/HBoxContainer/Health
 
 func set_score_label_value(new_score):
 	score.text = str(new_score)

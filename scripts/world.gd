@@ -1,10 +1,12 @@
 extends Node2D
 
-@export var bubble_speed = 100
+@export var bubble_speed = 50
 @onready var player: CharacterBody2D = $Player
 @onready var start_point: Node2D = $StartPoint
 @onready var bubbles: Node = $Bubbles
-@onready var hud: CanvasLayer = $HUD
+#@onready var hud: Control = $HUD
+@onready var hud = $CanvasLayer/HUD
+
 @onready var game_timer: Timer = $GameTimer
 @onready var spawner: Node2D = $Player/Camera2D/Spawner
 @onready var explosion_sound: AudioStreamPlayer = $ExplosionSound
@@ -56,7 +58,7 @@ func spawn_bubble() -> void:
 func increase_difficulty_level():
 	if difficulty_level < 5:
 		difficulty_level += 1
-		bubble_speed += 50
+		bubble_speed += 10
 		print("LEVEL: ", difficulty_level)
 	
 func _on_bubble_popped() -> void:
@@ -86,10 +88,8 @@ func _on_power_up_timer_timeout() -> void:
 		add_child(powerup_instance, true)
 	
 func _on_powerup_aquired() -> void:
-	print("player got powerup")
 	puffer_boom.play()
 	for bubble: Area2D in bubbles.get_children():
-		print(bubble.is_in_danger)
 		if bubble.is_in_danger:
 			bubble.queue_free()
 			

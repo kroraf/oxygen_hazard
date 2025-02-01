@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://ci1kenugbo1o8"
-path="res://.godot/imported/pufferfish.png-09c9e2d0a469a1fbb971513399440ca5.ctex"
+uid="uid://cqwaq0s4nwk0s"
+path="res://.godot/imported/cybergum6-8x.png-198d6ba0580c56c9e7d74d3e4551dcdb.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/sprites/pufferfish.png"
-dest_files=["res://.godot/imported/pufferfish.png-09c9e2d0a469a1fbb971513399440ca5.ctex"]
+source_file="res://assets/cybergum6-8x.png"
+dest_files=["res://.godot/imported/cybergum6-8x.png-198d6ba0580c56c9e7d74d3e4551dcdb.ctex"]
 
 [params]
 

@@ -1,45 +1,59 @@
-[gd_scene load_steps=9 format=3 uid="uid://b52gpt6w2eqse"]
+[gd_scene load_steps=13 format=3 uid="uid://b52gpt6w2eqse"]
 
 [ext_resource type="Script" uid="uid://dujhkvqt0aniw" path="res://scripts/world.gd" id="1_i7141"]
 [ext_resource type="PackedScene" uid="uid://ci1bw0excb6yq" path="res://scenes/hud.tscn" id="2_4mrxx"]
-[ext_resource type="Texture2D" uid="uid://cfq0km7bps3p5" path="res://assets/background/sea_background.png" id="3_7r4gi"]
+[ext_resource type="Texture2D" uid="uid://v358sldykqix" path="res://assets/background/bga.png" id="2_7r4gi"]
+[ext_resource type="AudioStream" uid="uid://y6x0n8yncwi4" path="res://assets/audio/A Little R & R.ogg" id="2_w7kh3"]
+[ext_resource type="Texture2D" uid="uid://clijhigw1qg8j" path="res://assets/background/bgb.png" id="3_7r4gi"]
+[ext_resource type="Texture2D" uid="uid://cgi8ykvg1lib8" path="res://assets/background/bgc.png" id="4_e3hyu"]
+[ext_resource type="AudioStream" uid="uid://5frnaqvrw4m" path="res://assets/audio/bubble-pop.mp3" id="4_qfnet"]
 [ext_resource type="PackedScene" uid="uid://xegokgkvt2b" path="res://scenes/player.tscn" id="4_w7kh3"]
 [ext_resource type="Script" uid="uid://cxnfm670uybbb" path="res://scripts/camera_2d.gd" id="5_e3hyu"]
-[ext_resource type="AudioStream" uid="uid://d0e5vvod4lj1i" path="res://assets/audio/explosion.wav" id="6_q5onr"]
 [ext_resource type="AudioStream" uid="uid://cubnv0ya8unan" path="res://assets/audio/puffer_boom.wav" id="7_jhx03"]
 
-[sub_resource type="WorldBoundaryShape2D" id="WorldBoundaryShape2D_036b0"]
-normal = Vector2(0, 1)
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_e3hyu"]
+size = Vector2(100000, 129)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_7r4gi"]
+size = Vector2(74.6737, 411.344)
 
 [node name="World" type="Node2D"]
 script = ExtResource("1_i7141")
 
-[node name="HUD" parent="." instance=ExtResource("2_4mrxx")]
-
-[node name="TopBoundry" type="StaticBody2D" parent="." groups=["wall"]]
-visible = false
-position = Vector2(-374, -389)
-collision_layer = 4
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="TopBoundry"]
-shape = SubResource("WorldBoundaryShape2D_036b0")
-
-[node name="BottomBoundry" type="StaticBody2D" parent="." groups=["wall"]]
-visible = false
-position = Vector2(-428, 1019)
-collision_layer = 4
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="BottomBoundry"]
-shape = SubResource("WorldBoundaryShape2D_036b0")
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("2_w7kh3")
+volume_db = -15.0
+autoplay = true
 
 [node name="Parallax2D" type="Parallax2D" parent="."]
-repeat_size = Vector2(1920, 0)
+scroll_scale = Vector2(0.1, 0.1)
+repeat_size = Vector2(320, 180)
 
-[node name="Ocean" type="Sprite2D" parent="Parallax2D"]
-z_index = -1
-position = Vector2(591, 324)
-scale = Vector2(1.395, 1.395)
+[node name="ColorRect" type="ColorRect" parent="Parallax2D"]
+visible = false
+offset_right = 320.0
+offset_bottom = 180.0
+color = Color(0.0470588, 0.454902, 0.458824, 1)
+
+[node name="Sprite2D" type="Sprite2D" parent="Parallax2D"]
+position = Vector2(160, 91)
+texture = ExtResource("2_7r4gi")
+
+[node name="Parallax2D2" type="Parallax2D" parent="."]
+scroll_scale = Vector2(0.3, 0.3)
+repeat_size = Vector2(320, 180)
+
+[node name="Sprite2D" type="Sprite2D" parent="Parallax2D2"]
+position = Vector2(156, 87)
 texture = ExtResource("3_7r4gi")
+
+[node name="Parallax2D3" type="Parallax2D" parent="."]
+scroll_scale = Vector2(0.8, 0.8)
+repeat_size = Vector2(320, 180)
+
+[node name="Sprite2D2" type="Sprite2D" parent="Parallax2D3"]
+position = Vector2(153, 86)
+texture = ExtResource("4_e3hyu")
 
 [node name="Player" parent="." groups=["player"] instance=ExtResource("4_w7kh3")]
 
@@ -56,82 +70,67 @@ script = ExtResource("5_e3hyu")
 [node name="Spawner" type="Node2D" parent="Player/Camera2D"]
 
 [node name="Marker2D" type="Marker2D" parent="Player/Camera2D/Spawner"]
-position = Vector2(-631, 3)
+position = Vector2(-200, 5)
 
 [node name="Marker2D2" type="Marker2D" parent="Player/Camera2D/Spawner"]
-position = Vector2(633, 3)
+position = Vector2(179, -2)
 
 [node name="Marker2D3" type="Marker2D" parent="Player/Camera2D/Spawner"]
-position = Vector2(630, 203)
+position = Vector2(183, 57)
 
 [node name="Marker2D4" type="Marker2D" parent="Player/Camera2D/Spawner"]
-position = Vector2(387, 371)
+position = Vector2(137, 111)
 
 [node name="Marker2D5" type="Marker2D" parent="Player/Camera2D/Spawner"]
-position = Vector2(176, 374)
+position = Vector2(63, 112)
 
 [node name="Marker2D6" type="Marker2D" parent="Player/Camera2D/Spawner"]
-position = Vector2(2, 371)
+position = Vector2(11, 114)
 
 [node name="Marker2D7" type="Marker2D" parent="Player/Camera2D/Spawner"]
-position = Vector2(-169, 371)
+position = Vector2(-50, 112)
 
 [node name="Marker2D8" type="Marker2D" parent="Player/Camera2D/Spawner"]
-position = Vector2(-374, 371)
+position = Vector2(-119, 112)
 
 [node name="Marker2D9" type="Marker2D" parent="Player/Camera2D/Spawner"]
-position = Vector2(-548, 380)
+position = Vector2(-217, 79)
 
 [node name="Marker2D10" type="Marker2D" parent="Player/Camera2D/Spawner"]
-position = Vector2(-671, 260)
+position = Vector2(-203, -71)
 
 [node name="Marker2D11" type="Marker2D" parent="Player/Camera2D/Spawner"]
-position = Vector2(-640, 123)
+position = Vector2(-142, -125)
 
 [node name="Marker2D12" type="Marker2D" parent="Player/Camera2D/Spawner"]
-position = Vector2(-631, -120)
+position = Vector2(-71, -126)
 
 [node name="Marker2D13" type="Marker2D" parent="Player/Camera2D/Spawner"]
-position = Vector2(-634, -303)
+position = Vector2(-10, -128)
 
 [node name="Marker2D14" type="Marker2D" parent="Player/Camera2D/Spawner"]
-position = Vector2(-486, -371)
+position = Vector2(44, -132)
 
 [node name="Marker2D15" type="Marker2D" parent="Player/Camera2D/Spawner"]
-position = Vector2(-295, -374)
+position = Vector2(132, -128)
 
 [node name="Marker2D16" type="Marker2D" parent="Player/Camera2D/Spawner"]
-position = Vector2(-104, -368)
+position = Vector2(176, -113)
 
 [node name="Marker2D17" type="Marker2D" parent="Player/Camera2D/Spawner"]
-position = Vector2(101, -382)
-
-[node name="Marker2D18" type="Marker2D" parent="Player/Camera2D/Spawner"]
-position = Vector2(238, -368)
-
-[node name="Marker2D19" type="Marker2D" parent="Player/Camera2D/Spawner"]
-position = Vector2(435, -374)
-
-[node name="Marker2D20" type="Marker2D" parent="Player/Camera2D/Spawner"]
-position = Vector2(646, -357)
-
-[node name="Marker2D21" type="Marker2D" parent="Player/Camera2D/Spawner"]
-position = Vector2(660, -243)
-
-[node name="Marker2D22" type="Marker2D" parent="Player/Camera2D/Spawner"]
-position = Vector2(657, -137)
+position = Vector2(190, -60)
 
 [node name="StartPoint" type="Marker2D" parent="."]
-position = Vector2(1337, 238)
+position = Vector2(175, 90)
 
 [node name="Bubbles" type="Node" parent="."]
 
 [node name="SpawnTimer" type="Timer" parent="."]
-wait_time = 0.3
+wait_time = 0.5
 autostart = true
 
 [node name="GameTimer" type="Timer" parent="."]
-wait_time = 3.0
+wait_time = 8.0
 autostart = true
 
 [node name="PowerUpTimer" type="Timer" parent="."]
@@ -139,10 +138,37 @@ wait_time = 4.0
 autostart = true
 
 [node name="ExplosionSound" type="AudioStreamPlayer" parent="."]
-stream = ExtResource("6_q5onr")
+stream = ExtResource("4_qfnet")
 
 [node name="PufferBoom" type="AudioStreamPlayer" parent="."]
 stream = ExtResource("7_jhx03")
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+
+[node name="HUD" parent="CanvasLayer" instance=ExtResource("2_4mrxx")]
+offset_left = 2.0
+offset_top = 1.0
+offset_right = 2.0
+offset_bottom = 1.0
+
+[node name="StaticBody2D" type="StaticBody2D" parent="."]
+position = Vector2(257, 91)
+scale = Vector2(0.970049, 0.975324)
+collision_layer = 32
+
+[node name="CollisionShape2Down" type="CollisionShape2D" parent="StaticBody2D"]
+position = Vector2(48982.1, 1044.78)
+shape = SubResource("RectangleShape2D_e3hyu")
+
+[node name="CollisionShape2DUp" type="CollisionShape2D" parent="StaticBody2D"]
+position = Vector2(48916.1, -578.269)
+scale = Vector2(0.998821, 1)
+shape = SubResource("RectangleShape2D_e3hyu")
+
+[node name="CollisionShape2D3Left" type="CollisionShape2D" parent="StaticBody2D"]
+position = Vector2(-1038.71, 235.819)
+scale = Vector2(0.701299, 4.33705)
+shape = SubResource("RectangleShape2D_7r4gi")
 
 [connection signal="timeout" from="SpawnTimer" to="." method="_on_spawn_timer_timeout"]
 [connection signal="timeout" from="GameTimer" to="." method="_on_game_timer_timeout"]
