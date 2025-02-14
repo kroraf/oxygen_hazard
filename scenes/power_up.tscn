@@ -1,10 +1,22 @@
 [gd_scene load_steps=8 format=3 uid="uid://yx4pb1ixt3ug"]
 
 [ext_resource type="Script" uid="uid://cbrloyhn410qh" path="res://scripts/power_up.gd" id="1_ig136"]
-[ext_resource type="Texture2D" uid="uid://bcnv6dphnqk4x" path="res://assets/sprites/puffer1.png" id="2_ig136"]
+[ext_resource type="Texture2D" uid="uid://co5irwaatyk42" path="res://assets/sprites/diamond.png" id="2_ig136"]
 
 [sub_resource type="Animation" id="Animation_h1prs"]
 length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:scale")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(3, 3)]
+}
 
 [sub_resource type="Animation" id="Animation_mkoic"]
 resource_name = "explode"
@@ -21,31 +33,33 @@ tracks/0/keys = {
 "update": 0,
 "values": [Vector2(3, 3), Vector2(40, 40)]
 }
-tracks/1/type = "method"
-tracks/1/imported = false
-tracks/1/enabled = true
-tracks/1/path = NodePath(".")
-tracks/1/interp = 1
-tracks/1/loop_wrap = true
-tracks/1/keys = {
-"times": PackedFloat32Array(0.2),
-"transitions": PackedFloat32Array(1),
-"values": [{
-"args": [],
-"method": &"destroy"
-}]
+
+[sub_resource type="Animation" id="Animation_ig136"]
+resource_name = "pulsate"
+length = 1.2
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:scale")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.6, 1.2),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [Vector2(1.5, 1.5), Vector2(2, 2), Vector2(1.5, 1.5)]
 }
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_wtpib"]
 _data = {
 &"RESET": SubResource("Animation_h1prs"),
-&"explode": SubResource("Animation_mkoic")
+&"explode": SubResource("Animation_mkoic"),
+&"pulsate": SubResource("Animation_ig136")
 }
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_6iuya"]
-radius = 3.28291
-
-[sub_resource type="CircleShape2D" id="CircleShape2D_mkoic"]
+radius = 1.8899
 
 [node name="PowerUp" type="Area2D"]
 collision_layer = 8
@@ -55,15 +69,17 @@ script = ExtResource("1_ig136")
 libraries = {
 &"": SubResource("AnimationLibrary_wtpib")
 }
+autoplay = "pulsate"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2(-1, 1)
 rotation = -3.14159
-scale = Vector2(7.47194, 8.8421)
+scale = Vector2(6.36952, 6.68351)
 shape = SubResource("CircleShape2D_6iuya")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
 texture_filter = 1
+position = Vector2(-2, 0)
 scale = Vector2(3, 3)
 texture = ExtResource("2_ig136")
 
@@ -74,15 +90,6 @@ autostart = true
 
 [node name="ExplosionTimer" type="Timer" parent="."]
 wait_time = 2.0
-
-[node name="ExplosionArea" type="Area2D" parent="." groups=["explosion"]]
-scale = Vector2(9.49888, 9.73119)
-collision_layer = 16
-collision_mask = 2
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="ExplosionArea" groups=["explosion"]]
-scale = Vector2(6.58068, 6.44082)
-shape = SubResource("CircleShape2D_mkoic")
 
 [connection signal="body_entered" from="." to="." method="_on_body_entered"]
 [connection signal="timeout" from="LifeTimer" to="." method="_on_life_timer_timeout"]

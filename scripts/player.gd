@@ -4,10 +4,16 @@ extends CharacterBody2D
 var acc = 400
 var fric = 300
 var can_move: bool
+var health = 5
+
+var is_invulnerable: bool = false
 
 @onready var particle_effect: GPUParticles2D = $FlameParticleEffect
-@onready var animated_sprite_2d = $AnimatedSprite2D
+@onready var animated_sprite_2d = $FishSprite
 @onready var animation_player = $AnimationPlayer
+@onready var invulnerablility_timer = $InvulnerablilityTimer
+@onready var invulnerablility_countdown_label = $InvulnerablilityCountdownLabel
+@onready var shield_sprite = $ShieldSprite
 
 
 signal took_damage
@@ -29,6 +35,10 @@ func slowdown(delta):
 	
 func player_move():
 	move_and_slide()
+	
+func _process(delta):
+	if invulnerablility_countdown_label.visible == true:
+		invulnerablility_countdown_label.text = str(int(invulnerablility_timer.time_left) + 1)
 		
 func _physics_process(delta):
 	var input_dir: Vector2 = input()
@@ -51,8 +61,9 @@ func _physics_process(delta):
 		player_move()
 	
 func take_damage():
-	animation_player.play("hurt")
-	emit_signal("took_damage")
+	if not is_invulnerable:
+		animation_player.play("hurt")
+		emit_signal("took_damage")
 
 func die():
 	animated_sprite_2d.play("idle")
@@ -65,3 +76,20 @@ func toggle_movement(value) -> void:
 	
 func play_hurt_animation() -> void:
 	animation_player.play("hurt")
+	
+func activate_invulnerablility():
+	invulnerablility_timer.start()
+	animation_player.stop()
+	is_invulnerable = true
+	var default_modulation = animated_sprite_2d.modulate
+	animated_sprite_2d.modulate.a = 0.4
+	shield_sprite.show()
+	invulnerablility_countdown_label.show()
+	await invulnerablility_timer.timeout
+	animated_sprite_2d.modulate = default_modulation
+	invulnerablility_countdown_label.hide()
+	shield_sprite.hide()
+	deactivate_invulnerablility()
+	
+func deactivate_invulnerablility():
+	is_invulnerable = false

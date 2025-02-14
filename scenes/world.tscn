@@ -1,4 +1,4 @@
-[gd_scene load_steps=13 format=3 uid="uid://b52gpt6w2eqse"]
+[gd_scene load_steps=14 format=3 uid="uid://b52gpt6w2eqse"]
 
 [ext_resource type="Script" uid="uid://dujhkvqt0aniw" path="res://scripts/world.gd" id="1_i7141"]
 [ext_resource type="PackedScene" uid="uid://ci1bw0excb6yq" path="res://scenes/hud.tscn" id="2_4mrxx"]
@@ -9,7 +9,8 @@
 [ext_resource type="AudioStream" uid="uid://5frnaqvrw4m" path="res://assets/audio/bubble-pop.mp3" id="4_qfnet"]
 [ext_resource type="PackedScene" uid="uid://xegokgkvt2b" path="res://scenes/player.tscn" id="4_w7kh3"]
 [ext_resource type="Script" uid="uid://cxnfm670uybbb" path="res://scripts/camera_2d.gd" id="5_e3hyu"]
-[ext_resource type="AudioStream" uid="uid://cubnv0ya8unan" path="res://assets/audio/puffer_boom.wav" id="7_jhx03"]
+[ext_resource type="AudioStream" uid="uid://bsg41kc5pbfwl" path="res://assets/audio/SFX_Arcade_Retro_Powerup_Upgrade_Set_02_003.wav" id="9_w7kh3"]
+[ext_resource type="AudioStream" uid="uid://c61vrtq7i3yc7" path="res://assets/audio/SFX_Arcade_Retro_Fail_Set_03_001.wav" id="11_e3hyu"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_e3hyu"]
 size = Vector2(100000, 129)
@@ -19,11 +20,6 @@ size = Vector2(74.6737, 411.344)
 
 [node name="World" type="Node2D"]
 script = ExtResource("1_i7141")
-
-[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
-stream = ExtResource("2_w7kh3")
-volume_db = -15.0
-autoplay = true
 
 [node name="Parallax2D" type="Parallax2D" parent="."]
 scroll_scale = Vector2(0.1, 0.1)
@@ -56,6 +52,7 @@ position = Vector2(153, 86)
 texture = ExtResource("4_e3hyu")
 
 [node name="Player" parent="." groups=["player"] instance=ExtResource("4_w7kh3")]
+process_mode = 3
 
 [node name="Camera2D" type="Camera2D" parent="Player"]
 limit_left = -730
@@ -137,12 +134,6 @@ autostart = true
 wait_time = 4.0
 autostart = true
 
-[node name="ExplosionSound" type="AudioStreamPlayer" parent="."]
-stream = ExtResource("4_qfnet")
-
-[node name="PufferBoom" type="AudioStreamPlayer" parent="."]
-stream = ExtResource("7_jhx03")
-
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
 
 [node name="HUD" parent="CanvasLayer" instance=ExtResource("2_4mrxx")]
@@ -169,6 +160,25 @@ shape = SubResource("RectangleShape2D_e3hyu")
 position = Vector2(-1038.71, 235.819)
 scale = Vector2(0.701299, 4.33705)
 shape = SubResource("RectangleShape2D_7r4gi")
+
+[node name="Sounds" type="Node" parent="."]
+
+[node name="MusicPlayer" type="AudioStreamPlayer" parent="Sounds"]
+process_mode = 3
+stream = ExtResource("2_w7kh3")
+volume_db = -15.0
+autoplay = true
+
+[node name="FailSound" type="AudioStreamPlayer" parent="Sounds"]
+process_mode = 3
+stream = ExtResource("11_e3hyu")
+
+[node name="PopSound" type="AudioStreamPlayer" parent="Sounds"]
+stream = ExtResource("4_qfnet")
+
+[node name="PowerUpAquired" type="AudioStreamPlayer" parent="Sounds"]
+stream = ExtResource("9_w7kh3")
+volume_db = -25.0
 
 [connection signal="timeout" from="SpawnTimer" to="." method="_on_spawn_timer_timeout"]
 [connection signal="timeout" from="GameTimer" to="." method="_on_game_timer_timeout"]

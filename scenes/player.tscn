@@ -1,9 +1,11 @@
-[gd_scene load_steps=18 format=3 uid="uid://xegokgkvt2b"]
+[gd_scene load_steps=21 format=3 uid="uid://xegokgkvt2b"]
 
 [ext_resource type="Script" uid="uid://c7jexj8yob0eb" path="res://scripts/player.gd" id="1_onrkg"]
 [ext_resource type="PackedScene" uid="uid://bpty42a6oevm1" path="res://scenes/particle_effect.tscn" id="2_i3pqv"]
 [ext_resource type="Texture2D" uid="uid://b03lfojh1ggxb" path="res://assets/sprites/fish1.png" id="3_qhqgy"]
 [ext_resource type="Texture2D" uid="uid://dhhiqm5wvx8cj" path="res://assets/sprites/fish_heet.png" id="4_dqkch"]
+[ext_resource type="FontFile" uid="uid://b0tbustybirmw" path="res://assets/fonts/m6x11.ttf" id="5_qlg0r"]
+[ext_resource type="SpriteFrames" uid="uid://dd8haqrutfoti" path="res://sprite_frames.tres" id="6_tuyoq"]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_onrkg"]
 radius = 2.97905
@@ -76,7 +78,7 @@ length = 0.001
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
-tracks/0/path = NodePath("AnimatedSprite2D:position")
+tracks/0/path = NodePath("FishSprite:position")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
@@ -88,7 +90,7 @@ tracks/0/keys = {
 tracks/1/type = "value"
 tracks/1/imported = false
 tracks/1/enabled = true
-tracks/1/path = NodePath("AnimatedSprite2D:modulate")
+tracks/1/path = NodePath("FishSprite:modulate")
 tracks/1/interp = 1
 tracks/1/loop_wrap = true
 tracks/1/keys = {
@@ -105,7 +107,7 @@ loop_mode = 1
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
-tracks/0/path = NodePath("AnimatedSprite2D:position")
+tracks/0/path = NodePath("FishSprite:position")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
@@ -121,7 +123,7 @@ length = 0.7
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
-tracks/0/path = NodePath("AnimatedSprite2D:modulate")
+tracks/0/path = NodePath("FishSprite:modulate")
 tracks/0/interp = 0
 tracks/0/loop_wrap = true
 tracks/0/keys = {
@@ -131,11 +133,29 @@ tracks/0/keys = {
 "values": [Color(1, 1, 1, 1), Color(1, 0, 0, 1), Color(1, 1, 1, 1), Color(1, 0, 0, 1), Color(1, 1, 1, 1), Color(1, 0, 0, 1), Color(1, 1, 1, 1), Color(1, 0, 0, 1), Color(1, 1, 1, 1), Color(1, 0, 0, 1), Color(1, 1, 1, 1)]
 }
 
+[sub_resource type="Animation" id="Animation_fjrip"]
+resource_name = "powerup_active"
+length = 1.2
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("FishSprite:modulate")
+tracks/0/interp = 2
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.200226, 0.400453, 0.601284, 0.799695, 1),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1),
+"update": 1,
+"values": [Color(1, 1, 0, 1), Color(1, 1, 1, 1), Color(1, 1, 0, 1), Color(1, 1, 1, 1), Color(1, 1, 0, 1), Color(1, 1, 1, 1)]
+}
+
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_tuyoq"]
 _data = {
 &"RESET": SubResource("Animation_qlg0r"),
 &"floating": SubResource("Animation_dqkch"),
-&"hurt": SubResource("Animation_tuyoq")
+&"hurt": SubResource("Animation_tuyoq"),
+&"powerup_active": SubResource("Animation_fjrip")
 }
 
 [node name="Player" type="CharacterBody2D"]
@@ -152,12 +172,35 @@ rotation = 1.5708
 scale = Vector2(1.34271, 1.13277)
 shape = SubResource("CapsuleShape2D_onrkg")
 
-[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+[node name="FishSprite" type="AnimatedSprite2D" parent="."]
 sprite_frames = SubResource("SpriteFrames_y4r1p")
-animation = &"idle"
+animation = &"move"
 autoplay = "idle"
+frame = 5
+frame_progress = 0.506406
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 libraries = {
 &"": SubResource("AnimationLibrary_tuyoq")
 }
+
+[node name="InvulnerablilityCountdownLabel" type="Label" parent="."]
+visible = false
+offset_left = -2.0
+offset_top = -16.0
+offset_right = 4.0
+offset_bottom = -7.0
+theme_override_fonts/font = ExtResource("5_qlg0r")
+theme_override_font_sizes/font_size = 9
+text = "0"
+
+[node name="InvulnerablilityTimer" type="Timer" parent="."]
+wait_time = 4.0
+one_shot = true
+
+[node name="ShieldSprite" type="AnimatedSprite2D" parent="."]
+visible = false
+scale = Vector2(0.5, 0.5)
+sprite_frames = ExtResource("6_tuyoq")
+autoplay = "default"
+frame_progress = 0.216545
