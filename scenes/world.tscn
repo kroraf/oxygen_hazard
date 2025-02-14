@@ -1,4 +1,4 @@
-[gd_scene load_steps=14 format=3 uid="uid://b52gpt6w2eqse"]
+[gd_scene load_steps=15 format=3 uid="uid://b52gpt6w2eqse"]
 
 [ext_resource type="Script" uid="uid://dujhkvqt0aniw" path="res://scripts/world.gd" id="1_i7141"]
 [ext_resource type="PackedScene" uid="uid://ci1bw0excb6yq" path="res://scenes/hud.tscn" id="2_4mrxx"]
@@ -11,6 +11,7 @@
 [ext_resource type="Script" uid="uid://cxnfm670uybbb" path="res://scripts/camera_2d.gd" id="5_e3hyu"]
 [ext_resource type="AudioStream" uid="uid://bsg41kc5pbfwl" path="res://assets/audio/SFX_Arcade_Retro_Powerup_Upgrade_Set_02_003.wav" id="9_w7kh3"]
 [ext_resource type="AudioStream" uid="uid://c61vrtq7i3yc7" path="res://assets/audio/SFX_Arcade_Retro_Fail_Set_03_001.wav" id="11_e3hyu"]
+[ext_resource type="AudioStream" uid="uid://dra0on8l67gxt" path="res://assets/audio/SFX_Arcade_Retro_Jump_Set_04_007.wav" id="12_q5onr"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_e3hyu"]
 size = Vector2(100000, 129)
@@ -131,7 +132,7 @@ wait_time = 8.0
 autostart = true
 
 [node name="PowerUpTimer" type="Timer" parent="."]
-wait_time = 4.0
+wait_time = 3.0
 autostart = true
 
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
@@ -172,13 +173,18 @@ autoplay = true
 [node name="FailSound" type="AudioStreamPlayer" parent="Sounds"]
 process_mode = 3
 stream = ExtResource("11_e3hyu")
+volume_db = -10.0
 
 [node name="PopSound" type="AudioStreamPlayer" parent="Sounds"]
 stream = ExtResource("4_qfnet")
 
 [node name="PowerUpAquired" type="AudioStreamPlayer" parent="Sounds"]
 stream = ExtResource("9_w7kh3")
-volume_db = -25.0
+volume_db = -20.0
+
+[node name="PositiveSound" type="AudioStreamPlayer" parent="Sounds"]
+stream = ExtResource("12_q5onr")
+volume_db = -15.0
 
 [connection signal="timeout" from="SpawnTimer" to="." method="_on_spawn_timer_timeout"]
 [connection signal="timeout" from="GameTimer" to="." method="_on_game_timer_timeout"]

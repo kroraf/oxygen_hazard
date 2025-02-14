@@ -12,6 +12,7 @@ extends Node2D
 @onready var fail_sound = $Sounds/FailSound
 @onready var pop_sound = $Sounds/PopSound
 @onready var power_up_aquired = $Sounds/PowerUpAquired
+@onready var positive_sound = $Sounds/PositiveSound
 
 
 var time_elapsed_label
@@ -62,7 +63,10 @@ func increase_difficulty_level():
 		print("LEVEL: ", difficulty_level)
 	
 func _on_bubble_popped() -> void:
-	pop_sound.play()
+	if player.is_invulnerable:
+		positive_sound.play()
+	else:
+		pop_sound.play()
 	if is_instance_valid(hud):
 		score += 1 * difficulty_level
 		hud.set_score_label_value("Bubbles popped: {0}".format([score]))
