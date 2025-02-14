@@ -105,4 +105,3 @@ func gameover() -> void:
 	fail_sound.play()
 	spawn_timer.paused = true
 	player.toggle_movement(false)
-	get_tree().paused = true
